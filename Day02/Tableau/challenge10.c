@@ -17,12 +17,11 @@ int main() {
     scanf("%d",&recherche);
     
     
-    int count;
+    int count=0;
     for(i = 0 ;i<n;i++){
         if(recherche == tableau[i]){
             count++;
-        }else{
-            count=0;
+            break;
         }
     }
     if(count>0){
