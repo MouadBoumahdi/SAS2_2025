@@ -18,10 +18,10 @@ int main() {
     }
 
     // Declaration des tableaux
-    char titre[n + 100][50];
-    char auteur[n + 100][50];
-    double prix[n + 100];
-    int quantite[n + 100];
+    char titre[n][50];
+    char auteur[n][50];
+    double prix[n];
+    int quantite[n];
 
     printf("\n");
 
