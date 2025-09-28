@@ -1,49 +1,52 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 int main() {
     int n;
     int i;
+    #define MAX 100
 
     // Demander combien de livres à saisir
     printf("Combien de livres : ");
     scanf("%d", &n);
+    getchar();
+    
 
-    while (n <= 0) {
+    while (n <= 0 || n > MAX) {
         printf("Try Again :\n");
         printf("Combien de livres : ");
         scanf("%d", &n);
+        getchar();
     }
 
     // Declaration des tableaux
-    char titre[n][50];
-    char auteur[n][50];
-    double prix[n];
-    int quantite[n];
+    char titre[MAX][50];
+    char auteur[MAX][50];
+    double prix[MAX];
+    int quantite[MAX];
 
     printf("\n");
 
     // Entrer les livres
     for (i = 0; i < n; i++) {
-        getchar();  
         printf("Entre l'auteur de livre : ");
-        scanf("%[^\n]", auteur[i]);
+        fgets(auteur[i],sizeof(auteur[i]),stdin);
+        auteur[i][strcspn(auteur[i],"\n")] = '\0';
 
-        getchar();
         printf("Entre le titre de livre : ");
-        scanf("%[^\n]", titre[i]);
+        fgets(titre[i],sizeof(titre[i]),stdin);
+        titre[i][strcspn(titre[i],"\n")] = '\0';
 
         printf("Entre le prix de livre : ");
         scanf("%lf", &prix[i]);
 
         printf("Entre la quantite de livre : ");
         scanf("%d", &quantite[i]);
-        printf("\n");
+        getchar();
     }
 
     // Menu
+    Menu:
     printf("=== Système de Gestion de Stock dans une Librairie ===\n\n");
     printf("1 - Ajouter un livre au stock\n");
     printf("2 - Afficher tous les livres disponibles\n");
@@ -53,19 +56,20 @@ int main() {
     printf("6 - Quitter\n");
 
     int choix;
-    Menu:
+    char recherchetitre[50];
+
     printf("Choix : ");
     scanf("%d", &choix);
-
+    getchar();
+    
     switch (choix) {
         case 1: {
             // Ajouter des livres
-            char reponse;
-                getchar();
+            if(n < MAX){
                 printf("Entre l'auteur de livre : ");
                 scanf("%[^\n]", auteur[n]);
-
                 getchar();
+
                 printf("Entre le titre de livre : ");
                 scanf("%[^\n]", titre[n]);
 
@@ -74,14 +78,17 @@ int main() {
 
                 printf("Entre la quantite de livre : ");
                 scanf("%d", &quantite[n]);
-
-                n++; 
-
                 getchar();
-               goto Menu;
-           
+                    
+                n++;
+                
 
-            break;
+               
+              
+            }else{
+                printf("Stock plein");
+            }
+             goto Menu;
         }
 
         case 2: {
@@ -93,15 +100,13 @@ int main() {
             printf("---------------------------------\n");
             goto Menu;
             
-            break;
         }
 
         case 3: {
             // Mettre à jour la quantite
-            char recherchetitre[50];
-            getchar();
             printf("Recherche un livre pour changer la quantite : ");
-            scanf("%[^\n]", recherchetitre);
+            fgets(recherchetitre,sizeof(recherchetitre),stdin);
+            recherchetitre[strcspn(recherchetitre,"\n")] = '\0';
 
             int found = 0;
             for (i = 0; i < n; i++) {
@@ -117,24 +122,24 @@ int main() {
                 }
             }
 
-            if (!found) {
+            if (found<=0) {
                 printf("Livre introuvable.\n");
-            }
+            }else{
                goto Menu;
-            break;
+            }
         }
 
         case 4: {
-            // Supprimer un livre
-            char recherchetitre[50];
-            getchar();
+            // Supprimer un livre            
             printf("Nom du livre à supprimer : ");
-            scanf("%[^\n]", recherchetitre);
+
+            fgets(recherchetitre,sizeof(recherchetitre),stdin);
+            recherchetitre[strcspn(recherchetitre,"\n")] = '\0';
 
             int found = 0;
             for (i = 0; i < n; i++) {
                 if (strcmp(recherchetitre, titre[i]) == 0) {
-                    for (int j = i; j < n - 1; j++) {
+                    for (int j = i; j < n; j++) {
                         strcpy(titre[j], titre[j + 1]);
                         strcpy(auteur[j], auteur[j + 1]);
                         prix[j] = prix[j + 1];
@@ -147,11 +152,10 @@ int main() {
                 }
             }
 
-            if (!found) {
+            if (found<=0) {
                 printf("Livre non trouve.\n");
             }
                goto Menu;
-            break;
         }
 
         case 5: {
@@ -162,7 +166,6 @@ int main() {
             }
             printf("Quantité totale de tous les livres : %d\n", total);
             goto Menu;
-            break;
         }
 
         case 6:
@@ -171,6 +174,7 @@ int main() {
 
         default:
             printf("Choix invalide.\n");
+            goto Menu;
     }
 
     
