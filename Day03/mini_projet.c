@@ -25,18 +25,20 @@ int main() {
     printf("5 - Rechercher un contact\n");
     printf("6 - Quitter\n");
     
-    int i,j,choix,n =0,found=0;
+    char choix;
+    int i,j,n =0,found=0;
     char nomrechercher[50];
     char newnumber[50];
+    char newemail[50];
     
     
     menu:
     printf("Quel est votre choix ? ");
-    scanf("%d",&choix);
+    scanf("%c",&choix);
     getchar();
     
     switch(choix){
-        case 1:
+        case '1':
         if (n < MAX) {
                 printf("Entrez le nom : ");
                 fgets(c.nom[n], sizeof(c.nom[n]), stdin);
@@ -59,7 +61,7 @@ int main() {
             
             
             
-        case 2:
+        case '2':
              printf("Entrez le nom du contact a modifier: ");
              fgets(nomrechercher,sizeof(nomrechercher),stdin);
              nomrechercher[strcspn(nomrechercher,"\n")] = '\0';
@@ -70,13 +72,17 @@ int main() {
                      fgets(newnumber,sizeof(newnumber),stdin);
                      newnumber[strcspn(newnumber,"\n")] = '\0';
                      strcpy(c.numero[i],newnumber);
+                     printf("entrer la nouveau email : ");
+                     fgets(newemail,sizeof(newemail),stdin);
+                     newemail[strcspn(newemail,"\n")] = '\0';
+                     strcpy(c.email[i],newemail);
                      
                      
                  }
              }
              goto menu;
         
-        case 3:
+        case '3':
              printf("Entrez le nom du contact pour supprimer: ");
              fgets(nomrechercher,sizeof(nomrechercher),stdin);
              nomrechercher[strcspn(nomrechercher,"\n")] = '\0';
@@ -99,7 +105,7 @@ int main() {
               
              goto menu;
             
-        case 4:
+        case '4':
             if(n>0){
                 printf("les contacts li kaynin :\n");
                 for(i = 0;i<n;i++){
@@ -114,7 +120,7 @@ int main() {
             goto menu;
             
             
-        case 5:
+        case '5':
             printf("rechercher un contact par son nom  : ");
              fgets(nomrechercher,sizeof(nomrechercher),stdin);
              nomrechercher[strcspn(nomrechercher,"\n")] = '\0';
@@ -134,7 +140,7 @@ int main() {
             
             
             
-        case 6:
+        case '6':
             printf("Quitter le programme!");
             break;
     
@@ -142,7 +148,7 @@ int main() {
     
     
         default:
-            printf("choix introuvable");
+            printf("choix introuvable\n");
             goto menu;
         
     }
