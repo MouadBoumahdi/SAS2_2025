@@ -77,8 +77,12 @@ int main() {
                      newemail[strcspn(newemail,"\n")] = '\0';
                      strcpy(c.email[i],newemail);
                      
-                     
+                     found++;
                  }
+             }
+             
+             if(!found){
+                 printf("introuvable\n");
              }
              goto menu;
         
@@ -93,13 +97,18 @@ int main() {
             strcpy(c.nom[j], c.nom[j+1]);
             strcpy(c.numero[j], c.numero[j+1]);
             strcpy(c.email[j], c.email[j+1]);
+            
         }
         n--;
+        found++;
         printf("le contact est supprime\n");
         break;
     }
+    
 }
-
+    if(!found){
+            printf("introuvable\n");
+        }
                 
              
               
@@ -130,10 +139,10 @@ int main() {
                     printf("%s,",c.nom[i]);
                     printf("%s,",c.numero[i]);
                     printf("%s\n",c.email[i]);
-                     found =1;
+                    found++;
                 }
             }
-            if(found<=0){
+            if(!found){
                 printf("introuvable\n");
             }
             goto menu;
