@@ -5,7 +5,7 @@
 
 struct contact{
     char nom[MAX][50];
-    char numero[MAX][50];
+    char numero[MAX][11];
     char email[MAX][50];
 };
 
@@ -25,38 +25,87 @@ int main() {
     printf("5 - Rechercher un contact\n");
     printf("6 - Quitter\n");
     
-    char choix;
+    char choix[100];
     int i,j,n =0,found=0;
     char nomrechercher[50];
-    char newnumber[50];
+    char newnumber[10];
     char newemail[50];
-    
+    int check ,check1;
+
     
     menu:
-    printf("Quel est votre choix ? ");
-    scanf("%c",&choix);
-    getchar();
+  
     
-    switch(choix){
+    check1 = 1; 
+    char choixconfirmer;
+    while(check1){
+        
+          printf("Quel est votre choix ? ");
+            scanf("%s",&choix);
+            getchar();
+            
+            
+        if(strlen(choix)>1){
+            printf("Try again\n");
+            continue;
+        }
+        if (choix[0] < '0' || choix[0] > '9') {
+            printf("Try again");
+            continue;
+        }else{
+            choixconfirmer = choix[0];
+            check1 = 0;
+        }
+        
+        
+    }
+    
+    switch(choixconfirmer){
         case '1':
         if (n < MAX) {
                 printf("Entrez le nom : ");
                 fgets(c.nom[n], sizeof(c.nom[n]), stdin);
                 c.nom[n][strcspn(c.nom[n], "\n")] = '\0';
-
-                printf("Entrez le numéro de téléphone : ");
-                fgets(c.numero[n], sizeof(c.numero[n]), stdin);
-                c.numero[n][strcspn(c.numero[n], "\n")] = '\0';
-
-                printf("Entrez l'adresse e-mail : ");
-                fgets(c.email[n], sizeof(c.email[n]), stdin);
-                c.email[n][strcspn(c.email[n], "\n")] = '\0';
-
-            n++;  
-        } else {
-            printf("Le carnet est plein!\n");
+                
+                
+check = 1;
+    while (check) {
+        printf("Entrez le numéro de téléphone : ");
+        fgets(c.numero[n], sizeof(c.numero[n]), stdin);
+        c.numero[n][strcspn(c.numero[n], "\n")] = '\0';
+    
+        if (strlen(c.numero[n]) != 10) {
+            printf("Le numéro doit contenir exactement 10 chiffres.\n");
+            continue; 
         }
-         goto menu;
+    
+        int valid = 1;
+        for (i = 0; i < 10; i++) {
+            if (c.numero[n][i] < '0' || c.numero[n][i] > '9') {
+                printf("Le numéro doit contenir uniquement des chiffres.\n");
+                valid = 0;
+                break;
+            }
+        }
+    
+        if (valid) {
+            check = 0; 
+        }
+    }
+    
+                   
+        
+                    getchar();
+                    printf("Entrez l'adresse e-mail : ");
+                    fgets(c.email[n], sizeof(c.email[n]), stdin);
+                    c.email[n][strcspn(c.email[n], "\n")] = '\0';
+                   
+    
+                n++;  
+            } else {
+                printf("Le carnet est plein!\n");
+            }
+             goto menu;
 
             
             
@@ -91,6 +140,8 @@ int main() {
              fgets(nomrechercher,sizeof(nomrechercher),stdin);
              nomrechercher[strcspn(nomrechercher,"\n")] = '\0';
              
+             
+             
              for(i = 0; i < n; i++) {
     if(strcmp(nomrechercher, c.nom[i]) == 0) {
         for(j = i; j < n - 1; j++) {
@@ -121,7 +172,7 @@ int main() {
                 printf("%s,",c.nom[i]);
                 printf("%s,",c.numero[i]);
                 printf("%s\n",c.email[i]);
-            }
+                }
             }else{
                 printf("Aucun contact a affiche.\n");
             }
